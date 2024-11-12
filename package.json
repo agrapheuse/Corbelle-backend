@@ -1,0 +1,37 @@
+{
+  "name": "corbelle-backend-server",
+  "version": "1.0.0",
+  "author": "Tryve",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsup src/app.ts --minify --format cjs --outDir dist && tsc-alias -p tsconfig.json",
+    "clean": "rm -rf ./dist",
+    "serve": "cross-env NODE_ENV=production node dist/app.cjs",
+    "start": "npm run serve",
+    "test": "jest",
+    "watch-ts": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agrapheuse/Corbelle-backend.git"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.11.1",
+    "dotenv": "^16.4.5",
+    "helmet": "^8.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.1",
+    "tsc-alias": "^1.8.10",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3"
+  }
+}
