@@ -8,7 +8,7 @@
     "dev": "tsx watch src/app.ts",
     "build": "tsup src/app.ts --minify --format cjs --outDir dist && tsc-alias -p tsconfig.json",
     "clean": "rm -rf ./dist",
-    "serve": "cross-env NODE_ENV=production node dist/app.cjs",
+    "serve": "cross-env node dist/app.cjs",
     "start": "npm run serve",
     "test": "jest",
     "watch-ts": "tsc --watch"
@@ -18,7 +18,6 @@
     "url": "git+https://github.com/agrapheuse/Corbelle-backend.git"
   },
   "dependencies": {
-    "@t3-oss/env-core": "^0.11.1",
     "dotenv": "^16.4.5",
     "helmet": "^8.0.0",
     "zod": "^3.23.8"

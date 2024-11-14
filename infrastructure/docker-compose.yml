@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mysql_images_db:
+    image: mysql:8.1.0
+    restart: "no"
+    environment:
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+
+networks:
+  backend:
+    name: back-network
+    driver: bridge
