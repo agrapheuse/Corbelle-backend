@@ -4,3 +4,6 @@ node_modules/*
 dist/*
 
 */mysql/*
+
+package-lock.json
+src/migrations/*

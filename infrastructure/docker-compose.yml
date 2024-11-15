@@ -8,8 +8,9 @@ services:
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "images_db"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - backend
     volumes:
