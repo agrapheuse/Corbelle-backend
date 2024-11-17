@@ -2,7 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/db.js";
 
 class Image extends Model {
-  public id!: number;
+  public id!: string;
   public title!: string;
   public description!: string;
   public url!: string;
@@ -12,7 +12,7 @@ class Image extends Model {
 Image.init(
   {
     id: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.STRING(36),
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
@@ -31,6 +31,7 @@ Image.init(
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
