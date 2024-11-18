@@ -1,12 +1,12 @@
-import { Dialect, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import connection from "./config/db.js";
 
-const { database, user, password, host, dbLogging } = connection;
+const { database, user, password, host, port } = connection;
 
 const sequelizeConnection = new Sequelize(database, user, password, {
   host,
-  logging: dbLogging,
-  dialect: "mysql" as Dialect,
+  port: port,
+  dialect: "mysql",
 });
 
 export default sequelizeConnection;
