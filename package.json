@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "helmet": "^8.0.0",
+    "http-status-codes": "^2.3.0",
     "mysql2": "^3.11.4",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5",

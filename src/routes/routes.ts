@@ -1,12 +1,13 @@
-import GetImagesController from "@/controller/get-images.js";
-import HealthCheckController from "../controller/health-check.js";
 import { Application } from "express";
-import PostImagesController from "@/controller/post-images.js";
+import ImageController from "../controller/ImageController.js";
 
-const routes = (app: Application) => {
-  app.get("/", HealthCheckController);
-  app.get("/images", GetImagesController);
-  app.post("/images", PostImagesController);
-};
+export default function registerRoutes(app: Application): void {
+  // Initialize the ImageController
+  const imageController = new ImageController();
+  const imageRoutes = imageController.routes();
 
-export default routes;
+  // Register routes dynamically
+  imageRoutes.forEach((route) => {
+    app[route.method](imageController.basePath + route.path, route.handler);
+  });
+}

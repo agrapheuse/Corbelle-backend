@@ -3,8 +3,8 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 
-import routes from "./routes/routes.js";
 import database from "./database/index.js";
+import registerRoutes from "./routes/routes.js";
 const app = express();
 
 const assertDatabaseConnection = async (): Promise<void> => {
@@ -17,22 +17,30 @@ const assertDatabaseConnection = async (): Promise<void> => {
   }
 };
 
-app.use(
-  express.json(),
-  /** Express middleware */
-  cors({
-    origin: "*",
-  }),
-  helmet() // security-related HTTP headers
-);
+(async () => {
+  // Ensure the database connection is established before starting the server
+  await assertDatabaseConnection();
 
-/** Disable the 'X-Powered-By' header to obscure server technology details for security */
-app.disable("x-powered-by");
+  app.use(
+    express.json(),
+    /** Express middleware */
+    cors({
+      origin: "*",
+    }),
+    helmet() // security-related HTTP headers
+  );
 
-routes(app);
+  /** Disable the 'X-Powered-By' header to obscure server technology details for security */
+  app.disable("x-powered-by");
 
-app.listen(process.env.PORT, () =>
-  console.log("Starting ExpressJS server on Port " + process.env.PORT)
-);
+  // Register routes
+  registerRoutes(app);
+
+  // Start the server
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () =>
+    console.log(`Starting ExpressJS server on Port ${PORT}`)
+  );
+})();
 
 export default app;

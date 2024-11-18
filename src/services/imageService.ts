@@ -4,7 +4,7 @@ import {
   ImageCreationAttributes,
 } from "@/database/model/Image.js";
 
-export class EnquiryService {
+export class ImageService {
   async getAll(): Promise<ImageAttributes[]> {
     try {
       const images = await Image.findAll();
@@ -19,7 +19,7 @@ export class EnquiryService {
     try {
       const image = await Image.findByPk(id);
       if (!image) {
-        throw new Error("Enquiry not found");
+        throw new Error("Image not found");
       }
       return image;
     } catch (error) {
@@ -35,7 +35,7 @@ export class EnquiryService {
     try {
       const image = await Image.findByPk(id);
       if (!image) {
-        throw new Error("Enquiry not found");
+        throw new Error("Image not found");
       }
       const updatedImage = await image.update(payload);
       return updatedImage;
