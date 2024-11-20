@@ -18,6 +18,7 @@
     "url": "git+https://github.com/agrapheuse/Corbelle-backend.git"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.697.0",
     "@types/multer": "^1.4.12",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",

@@ -48,7 +48,7 @@ export class ImageService {
   async create(payload: ImageCreationAttributes): Promise<ImageAttributes> {
     try {
       const image = await Image.create(payload);
-      return image;
+      return image.dataValues;
     } catch (error) {
       console.error(error);
       throw error;

@@ -4,6 +4,8 @@ import { ImageService } from "@/services/imageService.js";
 import { ImageAttributes } from "@/database/model/Image.js";
 import { RouteDefinition } from "../routes/RouteDefinition.js";
 import { ResponseStatus } from "@/enums/api.js";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Readable } from "stream";
 
 /**
  * Enquiry controller
@@ -11,6 +13,14 @@ import { ResponseStatus } from "@/enums/api.js";
 export default class ImageController extends BaseController {
   private image: ImageService;
   public basePath: string = "/images";
+
+  private s3Client = new S3Client({
+    region: process.env.AWS_REGION || "",
+    credentials: {
+      accessKeyId: process.env.ACCESS_KEY || "",
+      secretAccessKey: process.env.SECRET_ACCESS_KEY || "",
+    },
+  });
 
   constructor() {
     super();
@@ -112,32 +122,40 @@ export default class ImageController extends BaseController {
     }
   }
 
-  // /**
-  //  *
-  //  * @param req
-  //  * @param res
-  //  * @param next
-  //  */
-  // public async createImage(img: File): Promise<void> {
-  //   try {
-  //     const { title, description, imageUrl } = req.body;
-  //     if (!title || !description || !imageUrl) {
-  //       throw new Error(ReasonPhrases.BAD_REQUEST);
-  //     }
-  //     const image: ImageAttributes = await this.image.create({
-  //       title,
-  //       description,
-  //       imageUrl,
-  //     });
-  //     res.locals.data = {
-  //       image,
-  //     };
-  //     // call base class method
-  //     super.send(res, ResponseStatus.CREATED);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // }
+  /**
+   *
+   * @param req
+   * @param res
+   * @param next
+   */
+  public async createImage(
+    img: Express.Multer.File,
+    title: string,
+    description: string
+  ): Promise<void> {
+    try {
+      const image: ImageAttributes = await this.image.create({
+        title,
+        description,
+        imageUrl: "placeholder",
+      });
+      try {
+        const fileStream = Readable.from(img.buffer);
+        const params = {
+          Bucket: process.env.BUCKET_NAME,
+          Key: title,
+          Body: fileStream,
+        };
+
+        await this.s3Client.send(new PutObjectCommand(params));
+        console.log("File uploaded successfully to bucket");
+        const imageUrl = `https://${process.env.BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
+        await this.image.update(image.id, { imageUrl });
+      } catch (err) {
+        await this.image.delete(image.id);
+      }
+    } catch (err) {}
+  }
 
   /**
    *

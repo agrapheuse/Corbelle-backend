@@ -12,7 +12,7 @@ export default function registerRoutes(app: Application): void {
     res.send("Welcome to the Image API!");
   });
 
-  const upload = multer({ dest: "uploads/" });
+  const upload = multer({ storage: multer.memoryStorage() });
 
   app.post("/", upload.single("file"), (req: Request, res: Response) => {
     if (!req.file) {
@@ -21,7 +21,9 @@ export default function registerRoutes(app: Application): void {
     }
 
     console.log(req.file);
-    res.json({ message: "File uploaded successfully" });
+
+    imageController.createImage(req.file, req.body.title, req.body.description);
+    res.json({ message: "File uploaded successfully to backend" });
   });
 
   // Register routes dynamically
