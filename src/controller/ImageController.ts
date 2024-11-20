@@ -3,6 +3,7 @@ import BaseController from "./BaseController.js";
 import { ImageService } from "@/services/imageService.js";
 import { ImageAttributes } from "@/database/model/Image.js";
 import { RouteDefinition } from "../routes/RouteDefinition.js";
+import { ResponseStatus } from "@/enums/api.js";
 
 /**
  * Enquiry controller
@@ -58,7 +59,7 @@ export default class ImageController extends BaseController {
       const images: ImageAttributes[] = await this.image.getAll();
       res.locals.data = images;
       // call base class method
-      this.send(res);
+      this.send(res, ResponseStatus.OK);
     } catch (err) {
       next(err);
     }
@@ -80,7 +81,7 @@ export default class ImageController extends BaseController {
       const image: ImageAttributes = await this.image.getById(id);
       res.locals.data = image;
       // call base class method
-      this.send(res);
+      this.send(res, ResponseStatus.OK);
     } catch (err) {
       next(err);
     }
@@ -105,7 +106,7 @@ export default class ImageController extends BaseController {
         image,
       };
       // call base class method
-      this.send(res);
+      this.send(res, ResponseStatus.OK);
     } catch (err) {
       next(err);
     }
@@ -132,7 +133,7 @@ export default class ImageController extends BaseController {
   //       image,
   //     };
   //     // call base class method
-  //     super.send(res, StatusCodes.CREATED);
+  //     super.send(res, ResponseStatus.CREATED);
   //   } catch (err) {
   //     next(err);
   //   }
@@ -156,7 +157,7 @@ export default class ImageController extends BaseController {
         status,
       };
       // call base class method
-      this.send(res);
+      this.send(res, ResponseStatus.OK);
     } catch (err) {
       next(err);
     }

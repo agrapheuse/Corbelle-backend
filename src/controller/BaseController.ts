@@ -1,3 +1,4 @@
+import { ResponseStatus } from "@/enums/api.js";
 import { Response } from "express";
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
 
@@ -10,7 +11,7 @@ export default class BaseController {
    * @param res - Express response object.
    * @param statusCode - HTTP status code (default is 200).
    */
-  public send(res: Response, statusCode: number = StatusCodes.OK): void {
+  public send(res: Response, statusCode: ResponseStatus): void {
     res.status(statusCode).json({
       status: getReasonPhrase(statusCode),
       data: res.locals.data || null,

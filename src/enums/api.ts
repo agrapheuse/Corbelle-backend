@@ -4,6 +4,10 @@ export enum ResponseStatus {
    */
   OK = 200,
   /**
+   * CREATED (201): Indicates that the POST request was successful.
+   */
+  CREATED = 201,
+  /**
    * UNAUTHORIZED (401): Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.
    */
   UNAUTHORIZED = 401,
