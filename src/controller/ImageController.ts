@@ -3,7 +3,6 @@ import BaseController from "./BaseController.js";
 import { ImageService } from "@/services/imageService.js";
 import { ImageAttributes } from "@/database/model/Image.js";
 import { RouteDefinition } from "../routes/RouteDefinition.js";
-import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 /**
  * Enquiry controller
@@ -30,11 +29,11 @@ export default class ImageController extends BaseController {
         method: "get",
         handler: this.getImage.bind(this),
       },
-      {
-        path: "/",
-        method: "post",
-        handler: this.createImage.bind(this),
-      },
+      // {
+      //   path: "/",
+      //   method: "post",
+      //   handler: this.createImage.bind(this),
+      // },
       {
         path: "/:id",
         method: "put",
@@ -112,36 +111,32 @@ export default class ImageController extends BaseController {
     }
   }
 
-  /**
-   *
-   * @param req
-   * @param res
-   * @param next
-   */
-  public async createImage(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const { title, description, imageUrl } = req.body;
-      if (!title || !description || !imageUrl) {
-        throw new Error(ReasonPhrases.BAD_REQUEST);
-      }
-      const image: ImageAttributes = await this.image.create({
-        title,
-        description,
-        imageUrl,
-      });
-      res.locals.data = {
-        image,
-      };
-      // call base class method
-      super.send(res, StatusCodes.CREATED);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // /**
+  //  *
+  //  * @param req
+  //  * @param res
+  //  * @param next
+  //  */
+  // public async createImage(img: File): Promise<void> {
+  //   try {
+  //     const { title, description, imageUrl } = req.body;
+  //     if (!title || !description || !imageUrl) {
+  //       throw new Error(ReasonPhrases.BAD_REQUEST);
+  //     }
+  //     const image: ImageAttributes = await this.image.create({
+  //       title,
+  //       description,
+  //       imageUrl,
+  //     });
+  //     res.locals.data = {
+  //       image,
+  //     };
+  //     // call base class method
+  //     super.send(res, StatusCodes.CREATED);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   /**
    *

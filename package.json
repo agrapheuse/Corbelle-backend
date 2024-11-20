@@ -18,9 +18,12 @@
     "url": "git+https://github.com/agrapheuse/Corbelle-backend.git"
   },
   "dependencies": {
+    "@types/multer": "^1.4.12",
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "helmet": "^8.0.0",
     "http-status-codes": "^2.3.0",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.4",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5",
