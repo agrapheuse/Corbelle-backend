@@ -10,7 +10,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
  */
 export default class ImageController extends BaseController {
   private image: ImageService;
-  public basePath: string = "images";
+  public basePath: string = "/images";
 
   constructor() {
     super();
@@ -56,7 +56,6 @@ export default class ImageController extends BaseController {
     next: NextFunction
   ): Promise<void> {
     try {
-      console.log("here");
       const images: ImageAttributes[] = await this.image.getAll();
       res.locals.data = images;
       // call base class method
