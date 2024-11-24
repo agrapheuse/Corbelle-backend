@@ -153,7 +153,6 @@ export default class ImageController extends BaseController {
         await this.image.update(image.id, { imageUrl });
       } catch (err) {
         await this.image.delete(image.id);
-        
       }
     } catch (err) {}
   }
